@@ -13,7 +13,7 @@ When a user starts the application, a list of available products and their assoc
 
 If an invalid product id is supplied, the application will notify the user. The user will then be prompted to resubmit the order.
 
-# ![id_not_exist](https://user-images.githubusercontent.com/2763308/37527371-472122aa-2908-11e8-8ba4-a3241a8cdd94.gif)
+![id_not_exist](https://user-images.githubusercontent.com/2763308/37527371-472122aa-2908-11e8-8ba4-a3241a8cdd94.gif)
 
 ##Insufficient Quantity
 
