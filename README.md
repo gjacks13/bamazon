@@ -5,9 +5,7 @@ A Node.js based cli clone of Amazon
 
 When a user starts the application, a list of available products and their associated information is displayed. The user can choose to submit an order for an a product, by providing the product id and the desired quantity. Once the order is submitted the application will submit the order and update the product quantity. 
 
-![tandardFlo](/Users/school/Desktop/standardFlow.gif)
-
-
+![standardflow](https://user-images.githubusercontent.com/2763308/37527368-445ccc90-2908-11e8-8c41-11c47ab5dd40.gif)
 
 #Error Conditions
 
@@ -15,13 +13,13 @@ When a user starts the application, a list of available products and their assoc
 
 If an invalid product id is supplied, the application will notify the user. The user will then be prompted to resubmit the order.
 
-# ![d_not_exis](/Users/school/Desktop/id_not_exist.gif)
+# ![id_not_exist](https://user-images.githubusercontent.com/2763308/37527371-472122aa-2908-11e8-8ba4-a3241a8cdd94.gif)
 
 ##Insufficient Quantity
 
 The application will prompt the user to resubmit their order; If a user submits an order request, with a quantity that is higher than the available quantity for the product requested.
 
-![nsufficient_quantit](/Users/school/Desktop/insufficient_quantity.gif)
+![insufficient_quantity](https://user-images.githubusercontent.com/2763308/37527377-4a76692e-2908-11e8-8628-10aaf2275aad.gif)
 
 ## Non-Numeric input
 
