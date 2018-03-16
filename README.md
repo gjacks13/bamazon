@@ -9,13 +9,13 @@ When a user starts the application, a list of available products and their assoc
 
 #Error Conditions
 
-##Ordering Invalid Products
+#Ordering Invalid Products
 
 If an invalid product id is supplied, the application will notify the user. The user will then be prompted to resubmit the order.
 
 ![id_not_exist](https://user-images.githubusercontent.com/2763308/37527371-472122aa-2908-11e8-8ba4-a3241a8cdd94.gif)
 
-##Insufficient Quantity
+#Insufficient Quantity
 
 The application will prompt the user to resubmit their order; If a user submits an order request, with a quantity that is higher than the available quantity for the product requested.
 
