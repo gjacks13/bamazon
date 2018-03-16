@@ -7,7 +7,7 @@ When a user starts the application, a list of available products and their assoc
 
 ![standardflow](https://user-images.githubusercontent.com/2763308/37527368-445ccc90-2908-11e8-8c41-11c47ab5dd40.gif)
 
-#Error Conditions
+# Error Conditions
 
 ## Ordering Invalid Products
 
