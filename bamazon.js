@@ -34,21 +34,28 @@ const bamazon = {
 
   connect() {
     return new Promise((resolve, reject) => {
-      if (this.connection.state === 'disconnected'){
+      if (this.connection.state === 'disconnected') {
         this.connection.connect(function(err) {
-          if (err) reject(err);
-          resolve();
+          if (err) {
+            reject(err);
+          } else {
+            resolve();
+          }
         });
+      } else {
+        resolve();
       }
-      resolve();
     });
   },
 
   query(sql, args) {
     return new Promise((resolve, reject) => {
       this.connection.query(sql, args, (err, rows) => {
-        if (err) reject(err);
-        resolve(rows);
+        if (err) {
+          reject(err);
+        } else {
+          resolve(rows);
+        }
       });
     });
   },
@@ -56,47 +63,48 @@ const bamazon = {
   close() {
     return new Promise((resolve, reject) => {
       this.connection.end(err => {
-        if (err) reject( err );
-        resolve();
+        if (err) {
+          reject(err);
+        } else {
+          resolve();
+        }
       });
     });
   },
 
   displayAllProducts() {
-    return new Promise((resolve, reject) => {
       const queryStmt = "SELECT item_id, product_name, department, price, stock_quantity FROM products";
       const args = [];
 
-      this.connect().then(function() {
+      return this.connect().then(() => {
         return this.query(queryStmt, args);
-      }.bind(this)).then(function(resultSet) {
+      }).then(resultSet => {
         this.printAvailableProducts(resultSet);
-      }.bind(this)).catch(function(err) {
+      }).catch(err => {
         this.close();
         throw err;
-      }.bind(this));
+      });
       return resolve();
-    });
   },
 
   updateProductQuantity(productId, quantity) {
     const queryStmt = "UPDATE products SET stock_quantity=? WHERE item_id=?";
     const args = [quantity, productId];
-
-    this.query(queryStmt, args).then(function(resultSet) {
+    return this.query(queryStmt, args).then(resultSet => {
       console.log(`Successfully placed an order for '${quantity}' products with id: ${productId}.`);
       Promise.resolve();
-    }.bind(this)).catch(function(err) {
+    }).catch(err => {
       this.close();
       throw err;
-    }.bind(this));
+    });
   },
 
   submitOrder(productId, quantity) {
     if (quantity < this.productQty[productId]) {
       let updatedQty = this.productQty[productId] - quantity;
-      this.updateProductQuantity(productId, updatedQty);
-      this.close();
+      this.updateProductQuantity(productId, updatedQty).then(() => {
+        this.close();
+      });
     } else {
       console.log("Insufficient quantity! Please, submit another order.");
       this.startBamazon();
@@ -104,7 +112,7 @@ const bamazon = {
   },
 
   startBamazon() {
-    this.displayAllProducts().then(function() {
+    this.displayAllProducts().then(() => {
       const prompts = [
         {
           type: 'input',
@@ -126,27 +134,25 @@ const bamazon = {
       inquirer.prompt(prompts).then(answers => {
         if (!answers.submitOrder) {
           console.log("You chose not to submit the order.");
-          this.startBamazon();
+          this.close();
           return;
         }
         if (!answers.quantity || !/^[0-9]+$/.test(answers.quantity)) {
           console.log("The quantity provided was not a number");
-          this.startBamazon();
+          this.close();
           return;
         }
         if (/^[0-9]+$/.test(answers.id) && this.availableProductIds.indexOf(parseInt(answers.id)) === -1) {
           console.log(`The provided product id '${answers.id}' is not available; or, it is not valid.`);
-          this.startBamazon();
+          this.close();
           return;
         } else {
           // process order request
           this.submitOrder(answers.id, answers.quantity);
           return;
         }
-      }).catch(function(err) {
-        throw err;
       });
-    }.bind(this)).catch(function(err) {
+    }).catch(function(err) {
       throw err;
     });
   }
